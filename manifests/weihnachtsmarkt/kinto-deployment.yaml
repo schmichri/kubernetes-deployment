@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kinto
@@ -6,6 +6,9 @@ metadata:
   labels:
     app: kinto
 spec:
+  selector:
+    matchLabels:
+      app: kinto
   template:
     metadata:
       labels:
@@ -17,3 +20,19 @@ spec:
         ports:
         - name: api
           containerPort: 8888
+        # env:
+        #     args: ["-db=postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgis?sslmode=disable", "mosmix_l"]
+        # kinto.storage_url = postgres://postgres:postgres@localhost/postgres
+        env:
+        - name: KINTO_STORAGE_URL
+          valueFrom:
+            secretKeyRef:
+              name: kinto
+              key: kinto.storage_url
+        volumeMounts:
+        - name: config
+          mountPath: /etc/kinto
+      volumes:
+      - name: config
+        configMap:
+          name: kinto

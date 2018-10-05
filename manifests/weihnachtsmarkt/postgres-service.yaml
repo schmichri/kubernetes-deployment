@@ -1,16 +1,14 @@
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: elasticsearch
-#   namespace: elasticsearch
-#   labels:
-#     app: elasticsearch
-#     stack: logging
-# spec:
-#   ports:
-#   - name: "api"
-#     port: 9200
-#     targetPort: 9200
-#   selector:
-#     app: elasticsearch
-#     stack: logging
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: weihnachtsmarkt
+  labels:
+    app: postgres
+spec:
+  ports:
+  - name: postgres
+    port: 5432
+    targetPort: postgres
+  selector:
+    app: postgres
