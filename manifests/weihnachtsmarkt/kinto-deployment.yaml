@@ -16,19 +16,22 @@ spec:
     spec:
       containers:
       - name: kinto
-        image: kinto/kinto-server:10.1.2
+        # image: kinto/kinto-server:10.1.2
+        image: kinto/kinto-server:latest
         ports:
         - name: api
           containerPort: 8888
-        # env:
-        #     args: ["-db=postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgis?sslmode=disable", "mosmix_l"]
-        # kinto.storage_url = postgres://postgres:postgres@localhost/postgres
         env:
         - name: KINTO_STORAGE_URL
           valueFrom:
             secretKeyRef:
               name: kinto
               key: kinto.storage_url
+        - name: KINTO_PERMISSION_URL
+          valueFrom:
+            secretKeyRef:
+              name: kinto
+              key: kinto.permission_url
         volumeMounts:
         - name: config
           mountPath: /etc/kinto
