@@ -1,0 +1,1 @@
+/run/user/1000/keybase/kbfs/team/codeformuenster/kubernetes-deployment/terraform/secrets.tfvars
